@@ -5,7 +5,7 @@
 # 截图
 
 ![截图][id]
-[id]: /screenshot/screenshot.gif "截图"
+[id]: screenshot/screenshot1.gif "截图"
 
 # 数据来源
 
