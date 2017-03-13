@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="model"
+            type="com.android.reading.model.JokeModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        style="@style/CommonCard">
+
+        <TextView
+            style="@style/InfoText"
+            android:textSize="@dimen/default_text_size"
+            android:padding="@dimen/default_horizontal_padding"
+            android:text="@{model.content}"/>
+    </android.support.v7.widget.CardView>
+</layout>

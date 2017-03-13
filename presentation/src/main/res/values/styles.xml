@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- 默认主题 -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/default_accent_color</item>
+        <item name="title_text_color">@color/default_title_text_color</item>
+        <item name="info_text_color">@color/default_info_text_color</item>
+        <item name="view_background">@color/colorWhite</item>
+        <item name="android:windowBackground">@color/default_window_background_color</item>
+    </style>
+
+    <!-- 夜间主题 -->
+    <style name="AppTheme.Night" parent="AppTheme">
+        <item name="title_text_color">@color/nightTitleTextColor</item>
+        <item name="info_text_color">@color/nightInfoTextColor</item>
+        <item name="view_background">@color/nighBackground</item>
+        <item name="colorPrimary">@color/nighPrimary</item>
+        <item name="android:windowBackground">@color/nighWindowBackground</item>
+        <item name="colorAccent">@color/nighAccent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="CommonText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/title_text_color</item>
+    </style>
+
+    <style name="TitleText" parent="CommonText">
+        <item name="android:textSize">@dimen/default_title_text_size</item>
+        <item name="android:textColor">?attr/title_text_color</item>
+    </style>
+
+    <style name="InfoText" parent="CommonText">
+        <item name="android:textSize">@dimen/default_info_text_size</item>
+        <item name="android:textColor">?attr/info_text_color</item>
+    </style>
+
+    <style name="CommonCard">
+        <item name="cardBackgroundColor">?attr/view_background</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardElevation">@dimen/default_elevation</item>
+        <item name="cardCornerRadius">@dimen/default_radius</item>
+        <item name="android:layout_marginLeft">@dimen/layout_common_padding</item>
+        <item name="android:layout_marginRight">@dimen/layout_common_padding</item>
+    </style>
+</resources>

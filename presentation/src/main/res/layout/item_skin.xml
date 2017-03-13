@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="java.lang.Integer" />
+
+        <variable
+            name="clickHandler"
+            type="com.android.reading.interactive.ClickHandler" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/colorCard"
+        style="@style/CommonCard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/skin_item_height"
+        app:cardBackgroundColor="@{model}"
+        android:onClick="@{() -> clickHandler.onClick(model)}"/>
+</layout>

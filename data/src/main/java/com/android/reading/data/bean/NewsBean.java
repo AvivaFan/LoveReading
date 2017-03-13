@@ -1,0 +1,182 @@
+package com.android.reading.data.bean;
+
+import android.os.Parcel;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+/**
+ * Created by Gu FanFan on 2017/3/2 21:04.
+ * 新闻Bean.
+ */
+
+public class NewsBean {
+
+    @SerializedName("reason")
+    private String reason;
+    @SerializedName("result")
+    private ResultBean result;
+    @SerializedName("error_code")
+    private int error_code;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public ResultBean getResult() {
+        return result;
+    }
+
+    public void setResult(ResultBean result) {
+        this.result = result;
+    }
+
+    public int getError_code() {
+        return error_code;
+    }
+
+    public void setError_code(int error_code) {
+        this.error_code = error_code;
+    }
+
+    public static class ResultBean {
+
+        @SerializedName("stat")
+        private String stat;
+        @SerializedName("data")
+        private List<DataBean> data;
+
+        public String getStat() {
+            return stat;
+        }
+
+        public void setStat(String stat) {
+            this.stat = stat;
+        }
+
+        public List<DataBean> getData() {
+            return data;
+        }
+
+        public void setData(List<DataBean> data) {
+            this.data = data;
+        }
+
+        public static class DataBean {
+            /**
+             * uniquekey : b50b43ea49a72bc3a51aadb07b9bd58c
+             * title : 跑步的最高境界，无伤跑到天荒地老
+             * date : 2017-03-02 20:55
+             * category : 头条
+             * author_name : 全民跑步
+             * url : http://mini.eastday.com/mobile/170302205527392.html
+             * thumbnail_pic_s : http://03.imgmini.eastday.com/mobile/20170302/20170302205527_e419462455e968dab37af90e2bc453a6_1_mwpm_03200403.jpeg
+             * thumbnail_pic_s02 : http://03.imgmini.eastday.com/mobile/20170302/20170302205527_e419462455e968dab37af90e2bc453a6_2_mwpm_03200403.jpeg
+             * thumbnail_pic_s03 : http://03.imgmini.eastday.com/mobile/20170302/20170302205527_e419462455e968dab37af90e2bc453a6_3_mwpm_03200403.jpeg
+             */
+
+            @SerializedName("uniquekey")
+            private String uniquekey;
+            @SerializedName("title")
+            private String title;
+            @SerializedName("date")
+            private String date;
+            @SerializedName("category")
+            private String category;
+            @SerializedName("author_name")
+            private String author_name;
+            @SerializedName("url")
+            private String url;
+            @SerializedName("thumbnail_pic_s")
+            private String thumbnail_pic_s;
+            @SerializedName("thumbnail_pic_s02")
+            private String thumbnail_pic_s02;
+            @SerializedName("thumbnail_pic_s03")
+            private String thumbnail_pic_s03;
+
+            public String getUniquekey() {
+                return uniquekey;
+            }
+
+            public void setUniquekey(String uniquekey) {
+                this.uniquekey = uniquekey;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getDate() {
+                return date;
+            }
+
+            public void setDate(String date) {
+                this.date = date;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public String getAuthor_name() {
+                return author_name;
+            }
+
+            public void setAuthor_name(String author_name) {
+                this.author_name = author_name;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getThumbnail_pic_s() {
+                return thumbnail_pic_s;
+            }
+
+            public void setThumbnail_pic_s(String thumbnail_pic_s) {
+                this.thumbnail_pic_s = thumbnail_pic_s;
+            }
+
+            public String getThumbnail_pic_s02() {
+                return thumbnail_pic_s02;
+            }
+
+            public void setThumbnail_pic_s02(String thumbnail_pic_s02) {
+                this.thumbnail_pic_s02 = thumbnail_pic_s02;
+            }
+
+            public String getThumbnail_pic_s03() {
+                return thumbnail_pic_s03;
+            }
+
+            public void setThumbnail_pic_s03(String thumbnail_pic_s03) {
+                this.thumbnail_pic_s03 = thumbnail_pic_s03;
+            }
+        }
+
+    }
+
+    protected NewsBean(Parcel in) {
+        this.reason = in.readString();
+        this.result = in.readParcelable(ResultBean.class.getClassLoader());
+        this.error_code = in.readInt();
+    }
+}
