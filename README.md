@@ -5,7 +5,7 @@
 # 截图
 
 ![截图][id]
-[id]: /screenshot/screenshot.gif "截图"
+[id]: screenshot/screenshot1.gif "截图"
 
 # 数据来源
 
@@ -23,3 +23,7 @@
 
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [Retrofit](http://square.github.io/retrofit/)
+
+# 日志
+
+* 17/03/13 长传第一版代码
