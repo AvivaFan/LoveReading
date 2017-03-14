@@ -13,4 +13,9 @@
     <color name="color_scheme_4">#8EA1F0</color>
     <color name="color_scheme_5">#F4F4F4</color>
     <color name="transparent">#00000000</color>
+
+    <color name="background_splash_colo">#F1F1F1</color>
+
+    <color name="register_card_color">#EFEDEE</color>
+    <color name="login_card_color">#42BDCD</color>
 </resources>

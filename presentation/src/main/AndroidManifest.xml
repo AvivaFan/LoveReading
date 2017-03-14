@@ -11,9 +11,10 @@
         android:supportsRtl="true"
         android:name=".ReadingApp"
         android:theme="@style/Primary1">
+
         <activity
-            android:name=".view.ui.activity.HomeActivity"
-            android:label="@string/app_name">
+            android:name=".view.ui.activity.SplashActivity"
+            android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -21,15 +22,26 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.ui.activity.JokeActivity" />
+        <activity
+            android:name=".view.ui.activity.LoginActivity" />
 
-        <activity android:name=".view.ui.activity.DetailsActivity" />
+        <activity
+            android:name=".view.ui.activity.HomeActivity" />
 
-        <activity android:name=".view.ui.activity.FeaturedActivity" />
+        <activity
+            android:name=".view.ui.activity.JokeActivity" />
 
-        <activity android:name=".view.ui.activity.CollectionActivity" />
+        <activity
+            android:name=".view.ui.activity.DetailsActivity" />
 
-        <activity android:name=".view.ui.activity.SkinActivity" />
+        <activity
+            android:name=".view.ui.activity.FeaturedActivity" />
+
+        <activity
+            android:name=".view.ui.activity.CollectionActivity" />
+
+        <activity
+            android:name=".view.ui.activity.SkinActivity" />
     </application>
 
 </manifest>

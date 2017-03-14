@@ -1,5 +1,7 @@
 package com.android.reading.view.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,10 @@ public class HomeActivity extends BaseActivity
 
     private ActivityHomeBinding mBinding;
     private HomeNavigator mHomeNavigator;
+
+    public static Intent getCallingIntent(Context context) {
+        return new Intent(context, HomeActivity.class);
+    }
 
     @Override
     public void initView() {
