@@ -12,4 +12,10 @@ public interface BaseView {
     void showData(List<?> data);
 
     void showMsg(Object msg);
+
+    void showEmptyView(String msg);
+
+    void showLoadingView();
+
+    void dismissLoadingView();
 }

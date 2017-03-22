@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.android.reading.utils.Utils"/>
+
+        <variable
+            name="model"
+            type="com.android.reading.model.NewsModel.ContentListBean"/>
+
+        <variable
+            name="pic1"
+            type="String" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        style="@style/CommonCard"
+        android:layout_height="@dimen/item_news_image_width">
+
+        <RelativeLayout
+            style="@style/CommonLayout"
+            android:layout_marginLeft="@dimen/common_padding"
+            android:layout_marginRight="@dimen/common_padding"
+            android:background="@null">
+
+            <TextView
+                android:id="@+id/titleText"
+                style="@style/TitleText"
+                android:layout_toLeftOf="@+id/newsPic"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/newsPic"
+                android:layout_marginTop="@dimen/common_padding"
+                android:text="@{model.title}"/>
+
+            <TextView
+                android:id="@+id/infoText"
+                style="@style/InfoText"
+                android:layout_alignLeft="@+id/newsPic"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignStart="@+id/newsPic"
+                android:layout_marginBottom="@dimen/common_padding"
+                android:text="@{Utils.getNewsInfo(model.source, model.pubDate)}"/>
+
+            <ImageView
+                android:id="@+id/newsPic"
+                android:layout_width="@dimen/item_news_image_width"
+                android:layout_height="@dimen/item_news_image_height"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
+                app:imageUrl="@{pic1}"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

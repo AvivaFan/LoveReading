@@ -9,11 +9,9 @@ public interface LoginPresenter extends BasePresenter {
 
     void onCreate();
 
-    void onLogin(String name, String pass, boolean isRemember);
+    void onLogin(String name, String pass);
 
     void onRegister(String name, String pass, String againPass);
 
     void startForgotPass();
-
-    void onCancel();
 }

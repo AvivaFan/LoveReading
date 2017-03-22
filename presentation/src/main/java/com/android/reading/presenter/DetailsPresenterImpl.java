@@ -2,7 +2,6 @@ package com.android.reading.presenter;
 
 import android.content.Context;
 
-import com.android.reading.R;
 import com.android.reading.data.sqlite.CollectionDBHelper;
 import com.android.reading.mapper.DataMapper;
 import com.android.reading.model.CollectionModel;
@@ -34,7 +33,7 @@ public class DetailsPresenterImpl implements DetailsPresenter {
         boolean isInsert = false;
         if (o instanceof NewsModel) {
             NewsModel newsModel =  (NewsModel) o;
-            isInsert = mDBHelper.insertCollection(DataMapper.transFormNews(newsModel));
+            // isInsert = mDBHelper.insertCollection(DataMapper.transFormNews(newsModel));
         } else if (o instanceof FeaturedModel) {
             FeaturedModel featuredModel = (FeaturedModel) o;
             isInsert = mDBHelper.insertCollection(DataMapper.transFormFeatured(featuredModel));
@@ -48,11 +47,11 @@ public class DetailsPresenterImpl implements DetailsPresenter {
 
         StatusModel statusModel = new StatusModel();
         statusModel.setStatus(isInsert);
-        if (isInsert) {
+        /*if (isInsert) {
             statusModel.setMsg(mContext.getString(R.string.insert_success_message));
         } else {
             statusModel.setMsg(mContext.getString(R.string.insert_error_message));
-        }
+        }*/
         mDetailsView.showMsg(statusModel);
     }
 
@@ -61,7 +60,7 @@ public class DetailsPresenterImpl implements DetailsPresenter {
         boolean isDelete = false;
         if (o instanceof NewsModel) {
             NewsModel newsModel =  (NewsModel) o;
-            isDelete = mDBHelper.deleteCollection(DataMapper.transFormNews(newsModel));
+            // isDelete = mDBHelper.deleteCollection(DataMapper.transFormNews(newsModel));
         } else if (o instanceof FeaturedModel) {
             FeaturedModel featuredModel = (FeaturedModel) o;
             isDelete = mDBHelper.deleteCollection(DataMapper.transFormFeatured(featuredModel));
@@ -75,11 +74,11 @@ public class DetailsPresenterImpl implements DetailsPresenter {
 
         StatusModel statusModel = new StatusModel();
         statusModel.setStatus(isDelete);
-        if (isDelete) {
+        /*if (isDelete) {
             statusModel.setMsg(mContext.getString(R.string.delete_success_message));
         } else {
             statusModel.setMsg(mContext.getString(R.string.delete_error_message));
-        }
+        }*/
         mDetailsView.showMsg(statusModel);
     }
 
@@ -88,7 +87,7 @@ public class DetailsPresenterImpl implements DetailsPresenter {
         boolean isHas = false;
         if (o instanceof NewsModel) {
             NewsModel newsModel =  (NewsModel) o;
-            isHas = mDBHelper.queryCollection(DataMapper.transFormNews(newsModel));
+            // isHas = mDBHelper.queryCollection(DataMapper.transFormNews(newsModel));
         } else if (o instanceof FeaturedModel) {
             FeaturedModel featuredModel = (FeaturedModel) o;
             isHas = mDBHelper.queryCollection(DataMapper.transFormFeatured(featuredModel));

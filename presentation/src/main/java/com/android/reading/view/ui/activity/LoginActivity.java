@@ -3,28 +3,37 @@ package com.android.reading.view.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewStubProxy;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.view.ViewStub;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.android.reading.R;
 import com.android.reading.databinding.ActivityLoginBinding;
-import com.android.reading.interactive.ClickHandler;
+import com.android.reading.databinding.LayoutLoginBinding;
+import com.android.reading.databinding.LayoutRegisterBinding;
+import com.android.reading.interactive.LoginHandler;
 import com.android.reading.presenter.LoginPresenterImpl;
 import com.android.reading.utils.AnimatorUtils;
-import com.android.reading.utils.DialogUtil;
+import com.android.reading.utils.Utils;
 import com.android.reading.view.LoginView;
 import com.android.reading.view.ui.base.BaseActivity;
-import com.android.reading.widget.NiftyDialog;
 
 /**
  * Created by Gu FanFan on 2017/3/14 18:00.
  * LoveReading.
  */
 
-public class LoginActivity extends BaseActivity implements LoginView, ClickHandler {
+public class LoginActivity extends BaseActivity implements LoginView, LoginHandler {
 
     private ActivityLoginBinding mBinding;
+    private LayoutLoginBinding mLoginBinding;
+    private LayoutRegisterBinding mRegisterBinding;
     private LoginPresenterImpl mPresenter;
-    private int isLogin = -1;
-    private NiftyDialog mDialog;
+    private View mLoginView;
+    private View mRegisterView;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -33,10 +42,33 @@ public class LoginActivity extends BaseActivity implements LoginView, ClickHandl
     @Override
     public void initView() {
         super.initView();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (Utils.hasJellyBean()) {
+            getWindow().getDecorView().setBackground(ContextCompat.getDrawable(this, R.drawable.login_window_background));
+        }
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        mBinding.setClick(this);
-        mPresenter = new LoginPresenterImpl(this);
-        initAnimator();
+        mPresenter = new LoginPresenterImpl(this, this);
+
+        mBinding.loginViewStub.setOnInflateListener(new ViewStub.OnInflateListener() {
+            @Override
+            public void onInflate(ViewStub stub, View inflated) {
+                mLoginBinding = DataBindingUtil.bind(inflated);
+                mLoginBinding.setLoginClick(LoginActivity.this);
+            }
+        });
+
+        mBinding.registerViewStub.setOnInflateListener(new ViewStub.OnInflateListener() {
+            @Override
+            public void onInflate(ViewStub stub, View inflated) {
+                mRegisterBinding = DataBindingUtil.bind(inflated);
+                mRegisterBinding.setLoginClick(LoginActivity.this);
+            }
+        });
+
+        mLoginView = setViewInflate(mBinding.loginViewStub);
+        setViewVisibility(mLoginView, View.VISIBLE);
+        setViewVisibility(mRegisterView, View.GONE);
     }
 
     @Override
@@ -49,87 +81,98 @@ public class LoginActivity extends BaseActivity implements LoginView, ClickHandl
         super.initListener();
     }
 
-    private void initAnimator() {
-        AnimatorUtils.startTranslationX(mBinding.prompt, -16f, mBinding.prompt.getTranslationX(), false, 500);
-        AnimatorUtils.startTranslationX(mBinding.login, -350f, mBinding.login.getTranslationX(), false, 500);
-        AnimatorUtils.startTranslationX(mBinding.register, -350f, mBinding.register.getTranslationX(), false, 700);
-    }
-
-    private void startAnimator() {
-        AnimatorUtils.startAnimatorSet(
-                AnimatorUtils.setObjectAnimator(mBinding.prompt, "scaleY", 1f, 0, true),
-                AnimatorUtils.setObjectAnimator(mBinding.prompt, "rotationY", 0, 90, true),
-                600);
-
-        AnimatorUtils.startTranslationY(mBinding.login, 0, mBinding.login.getHeight() / 2, false, 500);
-        AnimatorUtils.startTranslationY(mBinding.register, 0, -(mBinding.register.getHeight() / 2), false, 500);
-
-        if (isLogin == 0) {
-            mBinding.prompt.setText(getString(R.string.dialog_login_btn));
-            mDialog = DialogUtil.createLoginDialog(this, mPresenter);
-        } else if (isLogin == 1){
-            mBinding.prompt.setText(getString(R.string.dialog_register_btn));
-            mDialog = DialogUtil.createRegisterDialog(this, mPresenter);
-        }
-
-        if (mDialog != null) {
-            AnimatorUtils.startAnimatorSet(
-                    AnimatorUtils.setObjectAnimator(mDialog.getDialogView(), "alpha", 0f, 1.0f, false),
-                    AnimatorUtils.setObjectAnimator(mDialog.getDialogView(), "scaleX", 0.5f, 1.0f, false),
-                    AnimatorUtils.setObjectAnimator(mDialog.getDialogView(), "scaleY", 0.5f, 1.0f, false),
-                    500);
-            mDialog.show();
-        }
-    }
-
-    private void onReductionAnimator() {
-        AnimatorUtils.startAnimatorSet(
-                AnimatorUtils.setObjectAnimator(mBinding.prompt, "scaleY", 1f, 0, true),
-                AnimatorUtils.setObjectAnimator(mBinding.prompt, "rotationY", 0, 90, true),
-                600);
-        mBinding.prompt.setText(getString(R.string.welcome));
-
-        AnimatorUtils.startTranslationY(
-                mBinding.login, mBinding.login.getHeight() / 2, 0, false, 500);
-        AnimatorUtils.startTranslationY(
-                mBinding.register, -(mBinding.register.getHeight() / 2), 0, false, 500);
-
-        if (mDialog != null) {
-            AnimatorUtils.startAnimatorSet(
-                    AnimatorUtils.setObjectAnimator(mDialog.getDialogView(), "alpha", 1.0f, 0f, false),
-                    AnimatorUtils.setObjectAnimator(mDialog.getDialogView(), "scaleX", 1.0f, 0.5f, false),
-                    AnimatorUtils.setObjectAnimator(mDialog.getDialogView(), "scaleY", 1.0f, 0.5f, false),
-                    600);
-            mDialog.dismiss();
-        }
-    }
-
     @Override
     public void showMsg(Object msg) {
-
+        showErrorToast((String) msg);
     }
 
     @Override
     public void onLoginSuccess() {
+        showSuccessToast(getString(R.string.login_success));
         Intent intent = HomeActivity.getCallingIntent(this);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void showCancelView() {
-        onReductionAnimator();
+    public void onRegisterSuccess(String msg) {
+        showSuccessToast(msg);
+        onStartLogin();
     }
 
     @Override
-    public void onClick(Object o) {
-        if (o instanceof Integer) {
-            isLogin = (int) o;
-            startAnimator();
+    public void showLoadingView() {
+        showLoading();
+    }
+
+    @Override
+    public void dismissLoadingView() {
+        dismissLoading();
+    }
+
+    @Override
+    public void onStartRegister() {
+        setViewVisibility(mLoginView, View.GONE);
+        if (mRegisterView == null) {
+            mRegisterView = setViewInflate(mBinding.registerViewStub);
+        }
+        AnimatorUtils.startRotationY(mRegisterView, 180f, 0f, false, 400);
+        setViewVisibility(mRegisterView, View.VISIBLE);
+    }
+
+    @Override
+    public void onStartLogin() {
+        setViewVisibility(mRegisterView, View.GONE);
+        if (mLoginView == null)
+            mLoginView = setViewInflate(mBinding.loginViewStub);
+        setViewVisibility(mLoginView, View.VISIBLE);
+        AnimatorUtils.startRotationY(mLoginView, -180f, 0f, false, 400);
+    }
+
+    @Override
+    public void onLogin() {
+        if (mLoginBinding != null) {
+            String name = mLoginBinding.name.getText().toString();
+            String passWord = mLoginBinding.password.getText().toString();
+            mPresenter.onLogin(name, passWord);
+        } else {
+            showErrorToast(getString(R.string.login_app_error));
         }
     }
 
     @Override
-    public void onLongClick() {
+    public void onRegister() {
+        if (mRegisterBinding != null) {
+            String name = mRegisterBinding.name.getText().toString();
+            String passWord = mRegisterBinding.password.getText().toString();
+            String againPass = mRegisterBinding.againPassword.getText().toString();
+            mPresenter.onRegister(name, passWord, againPass);
+        } else {
+            showErrorToast(getString(R.string.login_app_error));
+        }
+    }
+
+    @Override
+    public void onClose() {
+        finish();
+    }
+
+    private void setViewVisibility(View view, int visibility) {
+        if (view != null)
+            view.setVisibility(visibility);
+    }
+
+    private View setViewInflate(ViewStubProxy stubProxy) {
+        View view = null;
+        ViewStub viewStub = stubProxy.getViewStub();
+        if (!stubProxy.isInflated())
+            view = viewStub.inflate();
+        return view;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
     }
 }

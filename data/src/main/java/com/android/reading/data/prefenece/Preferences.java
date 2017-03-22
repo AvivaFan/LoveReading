@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.android.reading.data.Constants;
+import com.android.reading.data.bean.UserBean;
 
 /**
  * Created by Gu FanFan on 2017/2/12 15:24.
@@ -118,5 +119,17 @@ public class Preferences {
      */
     public boolean contains(String key) {
         return mPreferences.contains(key);
+    }
+
+    public void putUserInfo(UserBean.User user) {
+        putIntData(Constants.USER_ID, user.getId());
+        putStringData(Constants.USER_NAME, user.getName());
+        putStringData(Constants.USER_EMAIL, user.getEmail());
+        putStringData(Constants.USER_PHONE, user.getPhone());
+        putStringData(Constants.USER_PASSWORD, user.getPassword());
+        putStringData(Constants.USER_REAL_NAME, user.getReal_name());
+        putStringData(Constants.USER_DEVICE, user.getDevice());
+        putStringData(Constants.USER_DEVICE, user.getDevice());
+        putBooleanData(Constants.IS_LOGIN, true);
     }
 }

@@ -141,6 +141,21 @@ public class DetailsActivity extends BaseActivity implements ClickHandler, BaseV
     }
 
     @Override
+    public void showEmptyView(String msg) {
+
+    }
+
+    @Override
+    public void showLoadingView() {
+
+    }
+
+    @Override
+    public void dismissLoadingView() {
+
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == event.getKeyCode() && mBinding.detailsWebView.canGoBack()) {
             mBinding.detailsWebView.goBack();

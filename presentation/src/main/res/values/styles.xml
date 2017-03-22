@@ -4,11 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/default_accent_color</item>
-        <item name="title_text_color">@color/default_title_text_color</item>
-        <item name="info_text_color">@color/default_info_text_color</item>
-        <item name="view_background">@color/colorWhite</item>
-        <item name="android:windowBackground">@color/default_window_background_color</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <!-- 夜间主题 -->
@@ -25,11 +21,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <!-- Splash -->
     <style name="Splash" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/background_splash</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <!-- Dialog -->
     <style name="CustomDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">false</item><!--半透明-->
@@ -42,33 +40,41 @@
         <item name="android:backgroundDimEnabled">true</item><!--模糊-->
     </style>
 
+    <!-- Text -->
     <style name="CommonText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">?attr/title_text_color</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/common_text_size</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="TitleText" parent="CommonText">
-        <item name="android:textSize">@dimen/default_title_text_size</item>
-        <item name="android:textColor">?attr/title_text_color</item>
+        <item name="android:textSize">@dimen/common_title_text_size</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:gravity">left|start</item>
     </style>
 
     <style name="InfoText" parent="CommonText">
-        <item name="android:textSize">@dimen/default_info_text_size</item>
-        <item name="android:textColor">?attr/info_text_color</item>
+        <item name="android:textSize">@dimen/common_info_text_size</item>
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:gravity">left|start</item>
+    </style>
+
+    <style name="AppBarText" parent="CommonText">
+        <item name="android:textColor">@color/browse_bar_text_color</item>
     </style>
 
     <style name="CommonCard">
-        <item name="cardBackgroundColor">?attr/view_background</item>
+        <item name="cardElevation">@dimen/common_elevation</item>
+        <item name="cardCornerRadius">@dimen/common_radius</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="cardElevation">@dimen/default_elevation</item>
-        <item name="cardCornerRadius">@dimen/default_radius</item>
-        <item name="android:layout_marginLeft">@dimen/layout_common_padding</item>
-        <item name="android:layout_marginRight">@dimen/layout_common_padding</item>
+        <item name="android:layout_marginLeft">@dimen/common_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_padding</item>
     </style>
 
-    <!-- 下划线 -->
+    <!-- Line -->
     <style name="line_horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.333dp</item>
@@ -81,31 +87,58 @@
         <item name="android:background">?attr/colorAccent</item>
     </style>
 
-    <style name="CommImageView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="srcCompat">@mipmap/ic_launcher</item>
+    <!-- Image -->
+    <style name="CommonImage">
+        <item name="android:layout_width">@dimen/common_image_size</item>
+        <item name="android:layout_height">@dimen/common_image_size</item>
+        <item name="android:contentDescription">@string/image_description</item>
     </style>
 
-    <style name="CommImageView.Login" parent="CommImageView">
-        <item name="android:layout_width">@dimen/login_default_image_size</item>
-        <item name="android:layout_height">@dimen/login_default_image_size</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_alignParentTop">true</item>
-    </style>
-
-    <style name="CommEditText">
+    <!-- Edit -->
+    <style name="CommonEdit">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/appbar_height</item>
-        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_height">@dimen/common_widget_height</item>
+        <item name="android:layout_marginLeft">@dimen/common_margin</item>
+        <item name="android:layout_marginRight">@dimen/common_margin</item>
         <item name="android:inputType">text</item>
     </style>
 
-    <style name="CommButton">
+    <!-- Button -->
+    <style name="CommonButton">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/appbar_height</item>
-        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_height">@dimen/common_widget_height</item>
+        <item name="android:layout_marginLeft">@dimen/common_margin</item>
+        <item name="android:layout_marginRight">@dimen/common_margin</item>
+    </style>
+
+    <!-- Layout -->
+    <style name="CommonLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/login_background</item>
+    </style>
+
+    <style name="AVLoadingIndicatorView">
+        <item name="minWidth">48dip</item>
+        <item name="maxWidth">48dip</item>
+        <item name="minHeight">48dip</item>
+        <item name="maxHeight">48dip</item>
+        <item name="indicatorName">BallPulseIndicator</item>
+    </style>
+
+    <style name="AVLoadingIndicatorView.Large">
+        <item name="minWidth">76dip</item>
+        <item name="maxWidth">76dip</item>
+        <item name="minHeight">76dip</item>
+        <item name="maxHeight">76dip</item>
+        <item name="indicatorName">BallPulseIndicator</item>
+    </style>
+
+    <style name="AVLoadingIndicatorView.Small">
+        <item name="minWidth">24dip</item>
+        <item name="maxWidth">24dip</item>
+        <item name="minHeight">24dip</item>
+        <item name="maxHeight">24dip</item>
+        <item name="indicatorName">BallPulseIndicator</item>
     </style>
 </resources>

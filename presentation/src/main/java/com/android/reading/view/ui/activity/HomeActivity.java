@@ -3,29 +3,25 @@ package com.android.reading.view.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
 
 import com.android.reading.R;
+import com.android.reading.data.Constants;
 import com.android.reading.databinding.ActivityHomeBinding;
-import com.android.reading.navigation.HomeNavigator;
-import com.android.reading.presenter.NewsPresenterImpl;
-import com.android.reading.utils.Constants;
+import com.android.reading.presenter.HomePresenterImpl;
+import com.android.reading.utils.DateUtils;
+import com.android.reading.utils.Utils;
 import com.android.reading.view.BaseView;
-import com.android.reading.view.ui.adapter.NewsCategoryPageAdapter;
+import com.android.reading.view.ui.adapter.LabelPagerAdapter;
 import com.android.reading.view.ui.base.BaseActivity;
 
 import java.util.List;
 
 public class HomeActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BaseView {
+        implements BaseView {
 
     private ActivityHomeBinding mBinding;
-    private HomeNavigator mHomeNavigator;
+    private String[] mLabelStrings;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, HomeActivity.class);
@@ -35,62 +31,46 @@ public class HomeActivity extends BaseActivity
     public void initView() {
         super.initView();
         mBinding = DataBindingUtil.setContentView(HomeActivity.this, R.layout.activity_home);
-        setSupportActionBar(mBinding.include.toolbar);
-        setTitle(R.string.nav_news);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mBinding.drawerLayout, mBinding.include.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mBinding.drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        mBinding.navView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void initData() {
         super.initData();
-        mHomeNavigator = new HomeNavigator();
-        NewsPresenterImpl presenter = new NewsPresenterImpl(Constants.NEWS_CATEGORY, this);
-        presenter.showNewsCategoryView();
-    }
+        mLabelStrings = getResources().getStringArray(R.array.tab_label);
+        HomePresenterImpl presenter = new HomePresenterImpl(mLabelStrings, this);
+        presenter.getDataList(null);
+        String userName = mPreferences.getStringData(Constants.USER_REAL_NAME, null);
+        if (Utils.isEmpty(userName))
+            userName = mPreferences.getStringData(Constants.USER_NAME, "AvivaFan");
 
-    @Override
-    public void onBackPressed() {
-        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_joke) {
-            mHomeNavigator.navigatorToJoke(this);
-        } else if (id == R.id.nav_featured) {
-            mHomeNavigator.navigatorToFeatured(this);
-        } else if (id == R.id.nav_collection) {
-            mHomeNavigator.navigatorToCollection(this);
-        } else if (id == R.id.nav_colorful) {
-            mHomeNavigator.navigatorToSkin(this);
-        }
-
-        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        return false;
+        mBinding.nameText.setText(userName);
+        mBinding.dataText.setText(DateUtils.millis2String(System.currentTimeMillis(), DateUtils.MD_E));
     }
 
     @Override
     public void showData(List<?> data) {
-        String[] categoryList = getResources().getStringArray(R.array.news_category);
-        mBinding.include.viewPager.setAdapter(new NewsCategoryPageAdapter
-                (getSupportFragmentManager(), (List<Fragment>) data, categoryList));
-        mBinding.include.viewPager.setOffscreenPageLimit(categoryList.length - 1);
-        mBinding.include.tabLayout.setupWithViewPager(mBinding.include.viewPager);
+        mBinding.labelViewPage.setAdapter(new LabelPagerAdapter(
+                getSupportFragmentManager(), (List<Fragment>) data, mLabelStrings));
+        mBinding.labelViewPage.setOffscreenPageLimit(data.size() - 1);
+        mBinding.labelLayout.setupWithViewPager(mBinding.labelViewPage);
     }
 
     @Override
     public void showMsg(Object msg) {
+    }
 
+    @Override
+    public void showEmptyView(String msg) {
+
+    }
+
+    @Override
+    public void showLoadingView() {
+        showLoading();
+    }
+
+    @Override
+    public void dismissLoadingView() {
+        dismissLoading();
     }
 }

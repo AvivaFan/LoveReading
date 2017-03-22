@@ -1,36 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="news_category">
-        <item>@string/news_top</item>
-        <item>@string/news_society</item>
-        <item>@string/news_domestic</item>
-        <item>@string/news_international</item>
-        <item>@string/news_entertainment</item>
-        <item>@string/news_sports</item>
-        <item>@string/news_military</item>
-        <item>@string/news_technology</item>
-        <item>@string/news_finance</item>
-        <item>@string/news_fashion</item>
+    <string-array name="tab_label">
+        <item>@string/all_label</item>
+        <item>@string/favorite_label</item>
+        <item>@string/mine</item>
     </string-array>
-
-    <integer-array name="themeColors">
-        <item>@color/primary_color_1</item>
-        <item>@color/primary_color_2</item>
-        <item>@color/primary_color_3</item>
-        <item>@color/primary_color_4</item>
-        <item>@color/primary_color_5</item>
-        <item>@color/primary_color_6</item>
-        <item>@color/primary_color_7</item>
-        <item>@color/primary_color_8</item>
-        <item>@color/primary_color_9</item>
-        <item>@color/primary_color_10</item>
-        <item>@color/primary_color_11</item>
-        <item>@color/primary_color_12</item>
-        <item>@color/primary_color_13</item>
-        <item>@color/primary_color_14</item>
-        <item>@color/primary_color_15</item>
-        <item>@color/primary_color_16</item>
-        <item>@color/primary_color_17</item>
-        <item>@color/primary_color_18</item>
-    </integer-array>
 </resources>

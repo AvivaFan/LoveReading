@@ -1,8 +1,6 @@
 package com.android.reading.data.net;
 
-import android.content.Context;
-
-import com.android.reading.data.R;
+import com.android.reading.data.bean.ChannelListBean;
 import com.android.reading.data.bean.FeaturedBean;
 import com.android.reading.data.bean.JokeBean;
 import com.android.reading.data.bean.NewsBean;
@@ -20,17 +18,15 @@ import retrofit2.Retrofit;
 public class RequestApiImpl {
 
     private ApiService mApiService;
-    private String mFailure;
     private static RequestApiImpl sRequestApi;
 
-    public static RequestApiImpl newInstance(Context context) {
+    public static RequestApiImpl newInstance() {
         if (sRequestApi == null)
-            sRequestApi = new RequestApiImpl(context);
+            sRequestApi = new RequestApiImpl();
         return sRequestApi;
     }
 
-    private RequestApiImpl(Context context) {
-        mFailure = context.getString(R.string.request_failure);
+    private RequestApiImpl() {
         Retrofit retrofit = ApiConnection.newInstance().getBaseRetrofit();
         mApiService = retrofit.create(ApiService.class);
     }
@@ -47,6 +43,17 @@ public class RequestApiImpl {
 
     public void getFeaturedList(int page, Observer<FeaturedBean> observer) {
         mApiService.getFeaturedList(page).subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+    }
+
+    public void getChannelList(Observer<ChannelListBean> observer) {
+        mApiService.getChannelList().subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+    }
+
+    public void getNews(String channelId, String channelName,
+                        String page, Observer<NewsBean> observer) {
+        mApiService.getNews(channelId, channelName, page).subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
 }

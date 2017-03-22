@@ -3,6 +3,8 @@ package com.android.reading.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by Gu FanFan on 2017/3/2 22:58.
  * 新闻Model.
@@ -10,98 +12,50 @@ import android.os.Parcelable;
 
 public class NewsModel implements Parcelable {
 
-    /**
-     * uniquekey : 0dd68ef75a59efedcb98e89824cf28d1
-     * title : 广州一小学招生 要求家长本科以上学历
-     * date : 2017-03-05 12:57
-     * category : 头条
-     * author_name : 广东广播电视台今日最新闻
-     * url : http://mini.eastday.com/mobile/170305125724254.html
-     * thumbnail_pic_s : http://07.imgmini.eastday.com/mobile/20170305/20170305125724_6b99ec7617c9dc2ff7a08789ef05f691_1_mwpm_03200403.jpeg
-     * thumbnail_pic_s02 : http://07.imgmini.eastday.com/mobile/20170305/20170305125724_6b99ec7617c9dc2ff7a08789ef05f691_2_mwpm_03200403.jpeg
-     * thumbnail_pic_s03 : http://07.imgmini.eastday.com/mobile/20170305/20170305125724_6b99ec7617c9dc2ff7a08789ef05f691_3_mwpm_03200403.jpeg
-     */
+    private int allPages;
+    private int currentPage;
+    private int allNum;
+    private int maxResult;
+    private List<ContentListBean> contentlist;
 
-    private String uniquekey;
-    private String title;
-    private String date;
-    private String category;
-    private String author_name;
-    private String url;
-    private String thumbnail_pic_s;
-    private String thumbnail_pic_s02;
-    private String thumbnail_pic_s03;
-
-    public String getUniquekey() {
-        return uniquekey;
+    public int getAllPages() {
+        return allPages;
     }
 
-    public void setUniquekey(String uniquekey) {
-        this.uniquekey = uniquekey;
+    public void setAllPages(int allPages) {
+        this.allPages = allPages;
     }
 
-    public String getTitle() {
-        return title;
+    public int getCurrentPage() {
+        return currentPage;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
     }
 
-    public String getDate() {
-        return date;
+    public int getAllNum() {
+        return allNum;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setAllNum(int allNum) {
+        this.allNum = allNum;
     }
 
-    public String getCategory() {
-        return category;
+    public int getMaxResult() {
+        return maxResult;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setMaxResult(int maxResult) {
+        this.maxResult = maxResult;
     }
 
-    public String getAuthor_name() {
-        return author_name;
+    public List<ContentListBean> getContentlist() {
+        return contentlist;
     }
 
-    public void setAuthor_name(String author_name) {
-        this.author_name = author_name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getThumbnail_pic_s() {
-        return thumbnail_pic_s;
-    }
-
-    public void setThumbnail_pic_s(String thumbnail_pic_s) {
-        this.thumbnail_pic_s = thumbnail_pic_s;
-    }
-
-    public String getThumbnail_pic_s02() {
-        return thumbnail_pic_s02;
-    }
-
-    public void setThumbnail_pic_s02(String thumbnail_pic_s02) {
-        this.thumbnail_pic_s02 = thumbnail_pic_s02;
-    }
-
-    public String getThumbnail_pic_s03() {
-        return thumbnail_pic_s03;
-    }
-
-    public void setThumbnail_pic_s03(String thumbnail_pic_s03) {
-        this.thumbnail_pic_s03 = thumbnail_pic_s03;
+    public void setContentlist(List<ContentListBean> contentlist) {
+        this.contentlist = contentlist;
     }
 
     @Override
@@ -111,41 +65,212 @@ public class NewsModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.uniquekey);
-        dest.writeString(this.title);
-        dest.writeString(this.date);
-        dest.writeString(this.category);
-        dest.writeString(this.author_name);
-        dest.writeString(this.url);
-        dest.writeString(this.thumbnail_pic_s);
-        dest.writeString(this.thumbnail_pic_s02);
-        dest.writeString(this.thumbnail_pic_s03);
+
     }
 
-    public NewsModel() {
-    }
+    public static class ContentListBean implements Parcelable {
 
-    protected NewsModel(Parcel in) {
-        this.uniquekey = in.readString();
-        this.title = in.readString();
-        this.date = in.readString();
-        this.category = in.readString();
-        this.author_name = in.readString();
-        this.url = in.readString();
-        this.thumbnail_pic_s = in.readString();
-        this.thumbnail_pic_s02 = in.readString();
-        this.thumbnail_pic_s03 = in.readString();
-    }
+        private String pubDate;
+        private boolean havePic;
+        private String title;
+        private String channelName;
+        private String desc;
+        private String source;
+        private String channelId;
+        private String link;
+        private List<Object> allList;
+        private List<ImageUrlsBean> imageurls;
 
-    public static final Parcelable.Creator<NewsModel> CREATOR = new Parcelable.Creator<NewsModel>() {
-        @Override
-        public NewsModel createFromParcel(Parcel source) {
-            return new NewsModel(source);
+        public ContentListBean() {
+        }
+
+        ContentListBean(Parcel in) {
+            pubDate = in.readString();
+            havePic = in.readByte() != 0;
+            title = in.readString();
+            channelName = in.readString();
+            desc = in.readString();
+            source = in.readString();
+            channelId = in.readString();
+            link = in.readString();
+            imageurls = in.createTypedArrayList(ImageUrlsBean.CREATOR);
         }
 
         @Override
-        public NewsModel[] newArray(int size) {
-            return new NewsModel[size];
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(pubDate);
+            dest.writeByte((byte) (havePic ? 1 : 0));
+            dest.writeString(title);
+            dest.writeString(channelName);
+            dest.writeString(desc);
+            dest.writeString(source);
+            dest.writeString(channelId);
+            dest.writeString(link);
+            dest.writeTypedList(imageurls);
         }
-    };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator<ContentListBean> CREATOR = new Creator<ContentListBean>() {
+            @Override
+            public ContentListBean createFromParcel(Parcel in) {
+                return new ContentListBean(in);
+            }
+
+            @Override
+            public ContentListBean[] newArray(int size) {
+                return new ContentListBean[size];
+            }
+        };
+
+        public String getPubDate() {
+            return pubDate;
+        }
+
+        public void setPubDate(String pubDate) {
+            this.pubDate = pubDate;
+        }
+
+        public boolean isHavePic() {
+            return havePic;
+        }
+
+        public void setHavePic(boolean havePic) {
+            this.havePic = havePic;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getChannelName() {
+            return channelName;
+        }
+
+        public void setChannelName(String channelName) {
+            this.channelName = channelName;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
+
+        public String getChannelId() {
+            return channelId;
+        }
+
+        public void setChannelId(String channelId) {
+            this.channelId = channelId;
+        }
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        public List<Object> getAllList() {
+            return allList;
+        }
+
+        public void setAllList(List<Object> allList) {
+            this.allList = allList;
+        }
+
+        public List<ImageUrlsBean> getImageurls() {
+            return imageurls;
+        }
+
+        public void setImageurls(List<ImageUrlsBean> imageurls) {
+            this.imageurls = imageurls;
+        }
+
+        public static class ImageUrlsBean implements Parcelable {
+            private int height;
+            private int width;
+            private String url;
+
+            public int getHeight() {
+                return height;
+            }
+
+            public void setHeight(int height) {
+                this.height = height;
+            }
+
+            public int getWidth() {
+                return width;
+            }
+
+            public void setWidth(int width) {
+                this.width = width;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.height);
+                dest.writeInt(this.width);
+                dest.writeString(this.url);
+            }
+
+            public ImageUrlsBean() {
+            }
+
+            protected ImageUrlsBean(Parcel in) {
+                this.height = in.readInt();
+                this.width = in.readInt();
+                this.url = in.readString();
+            }
+
+            public static final Parcelable.Creator<ImageUrlsBean> CREATOR = new Parcelable.Creator<ImageUrlsBean>() {
+                @Override
+                public ImageUrlsBean createFromParcel(Parcel source) {
+                    return new ImageUrlsBean(source);
+                }
+
+                @Override
+                public ImageUrlsBean[] newArray(int size) {
+                    return new ImageUrlsBean[size];
+                }
+            };
+        }
+
+
+    }
+
+
 }

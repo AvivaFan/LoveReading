@@ -16,6 +16,7 @@ public class ApiConnection {
 
     private static ApiConnection sApiConnection;
     private volatile Retrofit mBaseRetrofit;
+    private volatile Retrofit mAvivaRetrofit;
 
     public static ApiConnection newInstance() {
         if (sApiConnection == null)
@@ -41,5 +42,25 @@ public class ApiConnection {
         }
 
         return mBaseRetrofit;
+    }
+
+    public Retrofit getAvivaFanRetrofit() {
+        if (mAvivaRetrofit == null) {
+            synchronized (Retrofit.class) {
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .connectTimeout(RequestApi.TIME_OUT, TimeUnit.SECONDS)
+                        .writeTimeout(RequestApi.TIME_OUT, TimeUnit.SECONDS)
+                        .build();
+
+                mAvivaRetrofit = new Retrofit.Builder()
+                        .baseUrl(RequestApi.AVIVA_FAN_HOST)
+                        .client(okHttpClient)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .build();
+            }
+        }
+
+        return mAvivaRetrofit;
     }
 }

@@ -11,5 +11,9 @@ public interface LoginView {
 
     void onLoginSuccess();
 
-    void showCancelView();
+    void onRegisterSuccess(String msg);
+
+    void showLoadingView();
+
+    void dismissLoadingView();
 }

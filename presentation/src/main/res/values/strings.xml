@@ -1,44 +1,27 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">"爱阅读"</string>
 
-    <string name="navigation_drawer_open">"打开导航菜单"</string>
-    <string name="navigation_drawer_close">"关闭导航菜单"</string>
-
-    <string name="activity_details">"<xliff:g id="details">%s</xliff:g>详情"</string>
-
-    <string name="nav_news">"新闻"</string>
-    <string name="nav_joke">"段子"</string>
-    <string name="nav_featured">"微信精选"</string>
-    <string name="nav_collection">"收藏"</string>
-    <string name="nav_settings">"设置"</string>
-    <string name="nav_colorful">"换肤"</string>
-    <string name="nav_about">"关于"</string>
-
-    <string name="news_top">"头条"</string>
-    <string name="news_society">"社会"</string>
-    <string name="news_domestic">"国内"</string>
-    <string name="news_international">"国际"</string>
-    <string name="news_entertainment">"娱乐"</string>
-    <string name="news_sports">"体育"</string>
-    <string name="news_military">"军事"</string>
-    <string name="news_technology">"科技"</string>
-    <string name="news_finance">"财经"</string>
-    <string name="news_fashion">"时尚"</string>
-    <string name="news_thumbnail">"新闻配图"</string>
-
-    <string name="insert_success_message">"已收藏!"</string>
-    <string name="insert_error_message">"收藏失败, 请重试!"</string>
-    <string name="delete_success_message">"已删除!"</string>
-    <string name="delete_error_message">"删除失败, 请重试!"</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="login_prompt">"已有账号\n请使用邮箱/手机号/用户名进行登录"</string>
-    <string name="register_prompt">"还没有账号\n立即注册"</string>
-    <string name="remember_me">"记住账号"</string>
-    <string name="forgot_pass">"忘记密码"</string>
-    <string name="dialog_login_btn">"登录"</string>
-    <string name="dialog_register_btn">"注册"</string>
+    <string name="login">"登录"</string>
+    <string name="register">"注册"</string>
+    <string name="confirm">"确认"</string>
     <string name="cancel">"取消"</string>
+    <string name="image_description">"图片描述"</string>
+    <string name="input_account">"请输入邮箱/手机号/用户名"</string>
     <string name="input_password">"请输入密码"</string>
     <string name="input_again_password">"请再次输入密码"</string>
-    <string name="input_account">"请输入邮箱/手机号/用户名"</string>
+    <string name="register_input_account">"请输入用户名"</string>
+    <string name="forgot_pass">"忘记密码?立即找回"</string>
+
+    <string name="all_label">"全部"</string>
+    <string name="favorite_label">"喜爱"</string>
+    <string name="mine">"我的"</string>
+    <string name="effort_coding">正在努力编码中&#8230;</string>
+
+    <string name="login_success">"登录成功!"</string>
+    <string name="login_app_error">"程序出现问题, 请立即反馈."</string>
+    <string name="register_name_or_pass_empty">"用户名密码不能为空!"</string>
+    <string name="register_pass_not_consistent">"两次密码不一样!"</string>
+    <string name="not_data">"暂无数据~"</string>
+
+    <string name="activity_details">"<xliff:g id="details">%s</xliff:g>详情"</string>
 </resources>

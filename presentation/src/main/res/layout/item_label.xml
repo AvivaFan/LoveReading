@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.android.reading.utils.Utils"/>
+
+        <variable
+            name="model"
+            type="com.android.reading.model.ChannelListModel"/>
+
+        <variable
+            name="clickHandler"
+            type="com.android.reading.interactive.ClickHandler"/>
+    </data>
+
+    <TextView
+        style="@style/CommonText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_label_height"
+        android:background="@color/item_label_background"
+        android:text="@{Utils.getInterceptString(model.name)}"
+        android:textColor="@color/item_label_text_color"
+        android:textSize="@dimen/item_label_text_size"
+        android:typeface="serif"
+        android:onClick="@{() -> clickHandler.onClick(model)}"/>
+</layout>

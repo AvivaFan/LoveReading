@@ -9,7 +9,6 @@ import com.android.reading.data.Utils;
 import com.android.reading.data.bean.CollectionBean;
 import com.android.reading.data.bean.FeaturedBean;
 import com.android.reading.data.bean.JokeBean;
-import com.android.reading.data.bean.NewsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +50,7 @@ public class CollectionDBHelper extends CommDBManager {
     public boolean insertCollection(Object o) {
         boolean isInsert = false;
 
-        if (o instanceof NewsBean.ResultBean.DataBean) {
-            isInsert = insertNews((NewsBean.ResultBean.DataBean) o);
-        } else if (o instanceof JokeBean.ResultBean) {
+        if (o instanceof JokeBean.ResultBean) {
             isInsert = insertJoke((JokeBean.ResultBean) o);
         } else if (o instanceof FeaturedBean.ResultBean.ListBean) {
             isInsert = insertFeature((FeaturedBean.ResultBean.ListBean) o);
@@ -62,39 +59,6 @@ public class CollectionDBHelper extends CommDBManager {
         }
 
         return isInsert;
-    }
-
-    /**
-     * 插入新闻数据
-     */
-    private boolean insertNews(NewsBean.ResultBean.DataBean dataBean) {
-        mSQLiteDatabase.beginTransaction();
-
-        ContentValues cvs = new ContentValues();
-        cvs.put(COLLECTION_TYPE, COLLECTION_TYPE_NEWS);
-        String title = dataBean.getTitle();
-        String url = dataBean.getUrl();
-        String image1 = dataBean.getThumbnail_pic_s();
-        String image2 = dataBean.getThumbnail_pic_s02();
-        String image3 = dataBean.getThumbnail_pic_s03();
-        String uniqueKey = dataBean.getUniquekey();
-        if (!Utils.isEmpty(title))
-            cvs.put(COLLECTION_TITLE, title);
-        if (!Utils.isEmpty(url))
-            cvs.put(COLLECTION_URL, url);
-        if (!Utils.isEmpty(image1))
-            cvs.put(COLLECTION_IMAGE_1, image1);
-        if (!Utils.isEmpty(image2))
-            cvs.put(COLLECTION_IMAGE_2, image2);
-        if (!Utils.isEmpty(image3))
-            cvs.put(COLLECTION_IMAGE_3, image3);
-        if (!Utils.isEmpty(uniqueKey))
-            cvs.put(COLLECTION_UNIQUE_KEY, uniqueKey);
-
-        long id = mSQLiteDatabase.insert(TABLE_NAME, null, cvs);
-        mSQLiteDatabase.setTransactionSuccessful();
-        mSQLiteDatabase.endTransaction();
-        return id != -1;
     }
 
     /**
@@ -178,11 +142,7 @@ public class CollectionDBHelper extends CommDBManager {
         String whereClause = null;
         String[] whereArgs = null;
 
-        if (o instanceof NewsBean.ResultBean.DataBean) {
-            NewsBean.ResultBean.DataBean dataBean = (NewsBean.ResultBean.DataBean) o;
-            whereClause = COLLECTION_TYPE + "=? AND " + COLLECTION_UNIQUE_KEY + "=?";
-            whereArgs = new String[]{COLLECTION_TYPE_NEWS, dataBean.getUniquekey()};
-        } else if (o instanceof JokeBean.ResultBean) {
+        if (o instanceof JokeBean.ResultBean) {
             JokeBean.ResultBean resultBean = (JokeBean.ResultBean) o;
             whereClause = COLLECTION_TYPE + "=? AND " + COLLECTION_HASH_ID + "=?";
             whereArgs = new String[]{COLLECTION_TYPE_NEWS, resultBean.getHashId()};
@@ -216,11 +176,7 @@ public class CollectionDBHelper extends CommDBManager {
         String selection = null;
         String[] selectionArgs = null;
 
-        if (o instanceof NewsBean.ResultBean.DataBean) {
-            NewsBean.ResultBean.DataBean dataBean = (NewsBean.ResultBean.DataBean) o;
-            selection = COLLECTION_TYPE + "=? AND " + COLLECTION_UNIQUE_KEY + "=?";
-            selectionArgs = new String[]{COLLECTION_TYPE_NEWS, dataBean.getUniquekey()};
-        } else if (o instanceof JokeBean.ResultBean) {
+        if (o instanceof JokeBean.ResultBean) {
             JokeBean.ResultBean resultBean = (JokeBean.ResultBean) o;
             selection = COLLECTION_TYPE + "=? AND " + COLLECTION_HASH_ID + "=?";
             selectionArgs = new String[]{COLLECTION_TYPE_NEWS, resultBean.getHashId()};

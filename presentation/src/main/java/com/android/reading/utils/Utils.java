@@ -1,5 +1,6 @@
 package com.android.reading.utils;
 
+import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.graphics.drawable.ColorDrawable;
@@ -49,7 +50,7 @@ public class Utils {
      * @return Time + Author
      */
     public static String getNewsInfo(String time, String author) {
-        return time + "  " + "来源: " + author;
+        return author + "  " + time;
     }
 
     @BindingAdapter("imageUrl")
@@ -65,5 +66,16 @@ public class Utils {
     @BindingConversion
     public static ColorDrawable convertColorToDrawable(int color) {
         return new ColorDrawable(color);
+    }
+
+    public static String getString(Context context, int resId) {
+        return context.getString(resId);
+    }
+
+    public static String getInterceptString(String string) {
+        if (string.contains("焦点") || string.contains("最新")) {
+            return string.substring(0, string.length() - 2);
+        }
+        return string;
     }
 }

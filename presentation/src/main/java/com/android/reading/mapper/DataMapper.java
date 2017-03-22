@@ -1,13 +1,18 @@
 package com.android.reading.mapper;
 
+import com.android.reading.data.bean.ChannelListBean;
 import com.android.reading.data.bean.CollectionBean;
 import com.android.reading.data.bean.FeaturedBean;
 import com.android.reading.data.bean.JokeBean;
 import com.android.reading.data.bean.NewsBean;
+import com.android.reading.data.bean.UserBean;
+import com.android.reading.data.bean.UserChannelListBean;
+import com.android.reading.model.ChannelListModel;
 import com.android.reading.model.CollectionModel;
 import com.android.reading.model.FeaturedModel;
 import com.android.reading.model.JokeModel;
 import com.android.reading.model.NewsModel;
+import com.android.reading.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,49 +24,72 @@ import java.util.List;
 
 public class DataMapper {
 
-    /** 新闻数据转换. */
-    public static NewsModel transFormNews(NewsBean.ResultBean.DataBean dataBean) {
+    /**
+     * 新闻数据转换.
+     */
+    public static NewsModel transFormNews(NewsBean.ShowapiResBodyBean.PagebeanBean pageBean) {
         NewsModel newsModel = new NewsModel();
-        newsModel.setUniquekey(dataBean.getUniquekey());
-        newsModel.setTitle(dataBean.getTitle());
-        newsModel.setDate(dataBean.getDate());
-        newsModel.setCategory(dataBean.getCategory());
-        newsModel.setAuthor_name(dataBean.getAuthor_name());
-        newsModel.setUrl(dataBean.getUrl());
-        newsModel.setThumbnail_pic_s(dataBean.getThumbnail_pic_s());
-        newsModel.setThumbnail_pic_s02(dataBean.getThumbnail_pic_s02());
-        newsModel.setThumbnail_pic_s03(dataBean.getThumbnail_pic_s03());
+        newsModel.setAllNum(pageBean.getAllNum());
+        newsModel.setAllPages(pageBean.getAllPages());
+        newsModel.setContentlist(transFormContentListBeans(pageBean.getContentlist()));
+        newsModel.setCurrentPage(pageBean.getCurrentPage());
+        newsModel.setMaxResult(pageBean.getMaxResult());
         return newsModel;
     }
 
-    public static NewsBean.ResultBean.DataBean transFormNews(NewsModel newsModel) {
-        NewsBean.ResultBean.DataBean dataBean = new NewsBean.ResultBean.DataBean();
-        dataBean.setUniquekey(newsModel.getUniquekey());
-        dataBean.setTitle(newsModel.getTitle());
-        dataBean.setDate(newsModel.getDate());
-        dataBean.setCategory(newsModel.getCategory());
-        dataBean.setAuthor_name(newsModel.getAuthor_name());
-        dataBean.setUrl(newsModel.getUrl());
-        dataBean.setThumbnail_pic_s(newsModel.getThumbnail_pic_s());
-        dataBean.setThumbnail_pic_s02(newsModel.getThumbnail_pic_s02());
-        dataBean.setThumbnail_pic_s03(newsModel.getThumbnail_pic_s03());
-        return dataBean;
-    }
-
-    public static List<NewsModel> transFormNews(List<NewsBean.ResultBean.DataBean> dataBeanList) {
-        List<NewsModel> newsModels = null;
-        if (dataBeanList != null && dataBeanList.size() > 0) {
-            newsModels = new ArrayList<>();
-
-            for (NewsBean.ResultBean.DataBean dataBean : dataBeanList) {
-                newsModels.add(transFormNews(dataBean));
+    private static List<NewsModel.ContentListBean> transFormContentListBeans
+            (List<NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> beanList) {
+        List<NewsModel.ContentListBean> contentListBeen = null;
+        if (beanList != null && beanList.size() > 0) {
+            contentListBeen = new ArrayList<>();
+            for (NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean bean : beanList) {
+                contentListBeen.add(transFormContentListBean(bean));
             }
         }
-
-        return newsModels;
+        return contentListBeen;
     }
 
-    /** 笑话数据转换. */
+    private static NewsModel.ContentListBean transFormContentListBean(
+            NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean contentlistBean) {
+        NewsModel.ContentListBean bean = new NewsModel.ContentListBean();
+        bean.setChannelId(contentlistBean.getChannelId());
+        bean.setChannelName(contentlistBean.getChannelName());
+        bean.setDesc(contentlistBean.getDesc());
+        bean.setHavePic(contentlistBean.isHavePic());
+        bean.setLink(contentlistBean.getLink());
+        bean.setPubDate(contentlistBean.getPubDate());
+        bean.setSource(contentlistBean.getSource());
+        bean.setTitle(contentlistBean.getTitle());
+        bean.setAllList(contentlistBean.getAllList());
+        bean.setImageurls(transFormImageurlsBean(contentlistBean.getImageurls()));
+        return bean;
+    }
+
+    private static List<NewsModel.ContentListBean.ImageUrlsBean> transFormImageurlsBean(
+            List<NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean.ImageurlsBean> imageurlsBeen) {
+        List<NewsModel.ContentListBean.ImageUrlsBean> imageUrlsBeen = null;
+        if (imageurlsBeen != null && imageurlsBeen.size() > 0) {
+            imageUrlsBeen = new ArrayList<>();
+            for (NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean.ImageurlsBean bean : imageurlsBeen) {
+                imageUrlsBeen.add(transFormImageUrlsBean(bean));
+            }
+        }
+        return imageUrlsBeen;
+    }
+
+    private static NewsModel.ContentListBean.ImageUrlsBean transFormImageUrlsBean(
+            NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean.ImageurlsBean imageurlsBean) {
+        NewsModel.ContentListBean.ImageUrlsBean imageUrlsBean =
+                new NewsModel.ContentListBean.ImageUrlsBean();
+        imageUrlsBean.setHeight(imageurlsBean.getHeight());
+        imageUrlsBean.setWidth(imageurlsBean.getWidth());
+        imageUrlsBean.setUrl(imageurlsBean.getUrl());
+        return imageUrlsBean;
+    }
+
+    /**
+     * 笑话数据转换.
+     */
     public static JokeModel transFormJoke(JokeBean.ResultBean resultBean) {
         JokeModel jokeModel = new JokeModel();
         jokeModel.setContent(resultBean.getContent());
@@ -91,7 +119,9 @@ public class DataMapper {
         return jokeModels;
     }
 
-    /** 微信精选数据转换. */
+    /**
+     * 微信精选数据转换.
+     */
     public static FeaturedModel transFormFeatured(FeaturedBean.ResultBean.ListBean listBean) {
         FeaturedModel featuredModel = new FeaturedModel();
         featuredModel.setId(listBean.getId());
@@ -128,7 +158,9 @@ public class DataMapper {
         return featuredModels;
     }
 
-    /** 收藏数据转换. */
+    /**
+     * 收藏数据转换.
+     */
     public static CollectionModel transFormCollection(CollectionBean collectionBean) {
         CollectionModel collectionModel = new CollectionModel();
         collectionModel.setId(collectionBean.getId());
@@ -166,12 +198,80 @@ public class DataMapper {
 
         if (beanList != null && beanList.size() > 0) {
             collectionModels = new ArrayList<>();
+
             for (CollectionBean collectionBean : beanList) {
                 collectionModels.add(transFormCollection(collectionBean));
             }
-            return collectionModels;
         }
 
         return collectionModels;
+    }
+
+    /**
+     * 频道列表数据转换
+     */
+    public static ChannelListModel transFormChannel(ChannelListBean.ShowapiResBodyBean.ChannelList channelList) {
+        ChannelListModel channelListModel = new ChannelListModel();
+        channelListModel.setChannelId(channelList.getChannelId());
+        channelListModel.setName(channelList.getName());
+        return channelListModel;
+    }
+
+    public static List<ChannelListModel> transFormChannelList(List<ChannelListBean.ShowapiResBodyBean.ChannelList> channelLists) {
+        List<ChannelListModel> channelListModels = null;
+        if (channelLists != null && channelLists.size() > 0) {
+            channelListModels = new ArrayList<>();
+
+            for (ChannelListBean.ShowapiResBodyBean.ChannelList channelList : channelLists) {
+                channelListModels.add(transFormChannel(channelList));
+            }
+        }
+
+        return channelListModels;
+    }
+
+    public static ChannelListModel transFormUserChannel(UserChannelListBean.ChannelBean channelBean) {
+        ChannelListModel channelListModel = new ChannelListModel();
+        channelListModel.setChannelId(channelBean.getChannelId());
+        channelListModel.setName(channelBean.getChannelName());
+        return channelListModel;
+    }
+
+    public static List<ChannelListModel> transFormUserChannelList(List<UserChannelListBean.ChannelBean> channelBeen) {
+        List<ChannelListModel> channelListModels = null;
+        if (channelBeen != null && channelBeen.size() > 0) {
+            channelListModels = new ArrayList<>();
+
+            for (UserChannelListBean.ChannelBean channelBean : channelBeen) {
+                channelListModels.add(transFormUserChannel(channelBean));
+            }
+        }
+
+        return channelListModels;
+    }
+
+    /** User data mapper. */
+    public static UserModel transFormUser(UserBean.User userBean) {
+        UserModel userModel = new UserModel();
+        userModel.setId(userBean.getId());
+        userModel.setName(userBean.getName());
+        userModel.setEmail(userBean.getEmail());
+        userModel.setPhone(userBean.getPhone());
+        userModel.setPassword(userBean.getPassword());
+        userModel.setReal_name(userBean.getReal_name());
+        userModel.setDevice(userBean.getDevice());
+        return userModel;
+    }
+
+    public static UserBean.User transFormUser(UserModel model) {
+        UserBean.User user = new UserBean.User();
+        user.setId(model.getId());
+        user.setName(model.getName());
+        user.setEmail(model.getEmail());
+        user.setPhone(model.getPhone());
+        user.setPassword(model.getPassword());
+        user.setReal_name(model.getReal_name());
+        user.setDevice(model.getDevice());
+        return user;
     }
 }

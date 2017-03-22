@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="loginClick"
+            type="com.android.reading.interactive.LoginHandler" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/loginLayout"
+        style="@style/CommonLayout">
+
+        <ImageView
+            android:id="@+id/close"
+            style="@style/CommonImage"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/common_margin"
+            android:background="@drawable/ic_close"
+            android:onClick="@{() -> loginClick.onClose()}"/>
+
+        <TextView
+            android:id="@+id/registerText"
+            style="@style/TitleText"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/common_margin"
+            android:textColor="@color/login_text_color"
+            android:text="@string/register"
+            android:onClick="@{() -> loginClick.onStartRegister()}"/>
+
+        <EditText
+            android:id="@+id/name"
+            style="@style/CommonEdit"
+            android:layout_marginTop="@dimen/login_vertical_margin"
+            android:layout_below="@+id/close"
+            android:hint="@string/input_account"/>
+
+        <EditText
+            android:id="@+id/password"
+            style="@style/CommonEdit"
+            android:layout_marginTop="@dimen/common_margin"
+            android:layout_below="@+id/name"
+            android:hint="@string/input_password"
+            android:inputType="textPassword"/>
+
+        <TextView
+            android:id="@+id/forgotText"
+            style="@style/TitleText"
+            android:layout_marginTop="@dimen/common_margin"
+            android:layout_alignRight="@+id/password"
+            android:layout_alignEnd="@+id/password"
+            android:layout_below="@+id/password"
+            android:textColor="@color/login_forgot_pass_text_color"
+            android:text="@string/forgot_pass"
+            android:onClick="@{() -> loginClick.onStartRegister()}"/>
+
+        <Button
+            style="@style/CommonButton"
+            android:layout_marginTop="@dimen/common_margin"
+            android:layout_alignLeft="@+id/password"
+            android:layout_alignStart="@+id/password"
+            android:layout_alignRight="@+id/password"
+            android:layout_alignEnd="@+id/password"
+            android:layout_below="@+id/forgotText"
+            android:text="@string/login"
+            android:onClick="@{() -> loginClick.onLogin()}"/>
+    </RelativeLayout>
+</layout>

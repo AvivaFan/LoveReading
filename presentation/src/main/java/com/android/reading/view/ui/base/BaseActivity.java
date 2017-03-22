@@ -1,14 +1,16 @@
 package com.android.reading.view.ui.base;
 
+import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.android.reading.R;
-import com.android.reading.colorful.Colorful;
 import com.android.reading.data.Constants;
 import com.android.reading.data.prefenece.Preferences;
-import com.android.reading.utils.LogUtils;
+import com.android.reading.utils.DialogUtil;
+import com.android.reading.widget.StyleToast;
 
 /**
  * Created by Gu FanFan on 2017/3/2 12:34.
@@ -19,11 +21,16 @@ public class BaseActivity extends AppCompatActivity implements BaseFunction {
 
     private boolean mIsNight;
     private int mThemeId;
+    private StyleToast mStyleToast;
+    protected Preferences mPreferences;
+    private Dialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initTheme();
         super.onCreate(savedInstanceState);
+        mPreferences = Preferences.newInstance(this);
+        mStyleToast = new StyleToast(this);
         initView();
         initData();
         initListener();
@@ -57,17 +64,76 @@ public class BaseActivity extends AppCompatActivity implements BaseFunction {
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtils.e("onResume");
-        Colorful colorful = Colorful.newInstance(this);
+    }
 
-        if (colorful != null && colorful.getThemeRes() > -1 && colorful.getThemeRes() != mThemeId) {
-            Handler handler = new Handler();
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    recreate();
-                }
-            });
-        }
+    protected void showShortToast(String toastMsg) {
+        if (mStyleToast == null)
+            mStyleToast = new StyleToast(this);
+        mStyleToast.setToastMsg(toastMsg);
+        mStyleToast.setDuration(Toast.LENGTH_SHORT);
+        mStyleToast.show();
+    }
+
+    protected void showLongToast(String toastMsg) {
+        if (mStyleToast == null)
+            mStyleToast = new StyleToast(this);
+        mStyleToast.setToastMsg(toastMsg);
+        mStyleToast.setDuration(Toast.LENGTH_LONG);
+        mStyleToast.show();
+    }
+
+    protected void showShortToast(String toastMsg, int icon) {
+        if (mStyleToast == null)
+            mStyleToast = new StyleToast(this);
+
+        mStyleToast.setToastMsg(toastMsg);
+        mStyleToast.setIconRes(icon);
+        mStyleToast.setDuration(Toast.LENGTH_SHORT);
+        mStyleToast.show();
+    }
+
+    protected void showLongToast(String toastMsg, int icon) {
+        if (mStyleToast == null)
+            mStyleToast = new StyleToast(this);
+
+        mStyleToast.setToastMsg(toastMsg);
+        mStyleToast.setIconRes(icon);
+        mStyleToast.setDuration(Toast.LENGTH_LONG);
+        mStyleToast.show();
+    }
+
+    protected void showLongCustomToast(String toastMsg, int icon, int toastBgColor) {
+        mStyleToast.setToastMsg(toastMsg);
+        mStyleToast.setIconRes(icon);
+        mStyleToast.setDuration(Toast.LENGTH_LONG);
+        mStyleToast.setToastBgColor(toastBgColor);
+        mStyleToast.show();
+    }
+
+    protected void showShortCustomToast(String toastMsg, int icon, int toastBgColor) {
+        mStyleToast.setToastMsg(toastMsg);
+        mStyleToast.setIconRes(icon);
+        mStyleToast.setDuration(Toast.LENGTH_SHORT);
+        mStyleToast.setToastBgColor(toastBgColor);
+        mStyleToast.show();
+    }
+
+    protected void showErrorToast(String msg) {
+        showShortCustomToast(msg, R.drawable.ic_error, ContextCompat.getColor(this, R.color.colorRed));
+    }
+
+    protected void showSuccessToast(String msg) {
+        showShortCustomToast(msg, R.drawable.ic_success, ContextCompat.getColor(this, R.color.colorPrimary));
+    }
+
+    protected void showLoading() {
+        if (mLoadingDialog == null)
+            mLoadingDialog = DialogUtil.startLoadingDialog(this);
+        mLoadingDialog.show();
+    }
+
+    protected void dismissLoading() {
+        if (mLoadingDialog != null)
+            mLoadingDialog.dismiss();
     }
 }

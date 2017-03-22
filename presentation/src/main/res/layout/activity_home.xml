@@ -4,29 +4,97 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        tools:openDrawer="start">
+    <RelativeLayout
+        style="@style/CommonLayout"
+        android:layout_margin="@dimen/common_padding"
+        android:background="@drawable/login_background">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/activity_news"
+        <RelativeLayout
+            android:id="@+id/topLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
 
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="200dp"
+            <ImageView
+                android:id="@+id/headImage"
+                android:layout_width="@dimen/home_head_image_size"
+                android:layout_height="@dimen/home_head_image_size"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/login_horizontal_margin"
+                android:layout_marginStart="@dimen/login_horizontal_margin"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:background="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/nameText"
+                style="@style/AppBarText"
+                android:layout_alignTop="@+id/headImage"
+                android:layout_marginLeft="@dimen/common_padding"
+                android:layout_marginStart="@dimen/common_padding"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_toEndOf="@+id/headImage"
+                android:layout_toRightOf="@+id/headImage"
+                android:text="AvivaFan"/>
+
+            <TextView
+                android:id="@+id/dataText"
+                style="@style/AppBarText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/nameText"
+                android:layout_alignStart="@+id/nameText"
+                android:layout_below="@+id/nameText"
+                android:layout_marginTop="@dimen/common_padding"
+                android:textSize="@dimen/common_info_text_size"
+                android:text="03/19 星期日"/>
+
+            <ImageView
+                android:id="@+id/weatherImage"
+                android:layout_width="@dimen/home_weather_image_size"
+                android:layout_height="@dimen/home_weather_image_size"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/nameText"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
+                android:background="@drawable/ic_colorful"/>
+
+            <TextView
+                android:id="@+id/locationText"
+                style="@style/AppBarText"
+                android:layout_width="@dimen/home_weather_image_size"
+                android:layout_alignLeft="@+id/weatherImage"
+                android:layout_alignStart="@+id/weatherImage"
+                android:layout_below="@+id/weatherImage"
+                android:textSize="@dimen/common_info_text_size"
+                android:text="北京"/>
+
+            <TextView
+                android:id="@+id/temperatureText"
+                style="@style/AppBarText"
+                android:layout_alignBottom="@+id/locationText"
+                android:layout_toLeftOf="@+id/locationText"
+                android:layout_toStartOf="@+id/locationText"
+                android:text="25°"
+                android:textSize="@dimen/layout_read_image_size"/>
+        </RelativeLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/labelLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_widget_height"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/topLayout"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/labelViewPage"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="?attr/view_background"
-            app:headerLayout="@layout/nav_header_home"
-            app:itemIconTint="?attr/colorPrimary"
-            app:itemTextColor="?attr/colorPrimary"
-            app:menu="@menu/activity_home_drawer"/>
-    </android.support.v4.widget.DrawerLayout>
+            android:layout_below="@+id/labelLayout"
+            android:layout_margin="@dimen/common_padding"/>
+    </RelativeLayout>
 </layout>
-

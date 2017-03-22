@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.android.reading.utils.Utils"/>
+
+        <variable
+            name="model"
+            type="com.android.reading.model.NewsModel.ContentListBean"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        style="@style/CommonCard"
+        android:layout_height="@dimen/item_news_no_pic_height">
+
+        <RelativeLayout
+            style="@style/CommonLayout"
+            android:layout_marginLeft="@dimen/common_padding"
+            android:layout_marginRight="@dimen/common_padding"
+            android:background="@null">
+
+            <TextView
+                android:id="@+id/titleText"
+                style="@style/TitleText"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/common_padding"
+                android:text="@{model.title}"/>
+
+            <TextView
+                android:id="@+id/infoText"
+                style="@style/InfoText"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/common_padding"
+                android:text="@{Utils.getNewsInfo(model.source, model.pubDate)}"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

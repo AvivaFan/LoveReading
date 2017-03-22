@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="@dimen/layout_read_label_width"
+        android:layout_height="match_parent"
+        android:background="@color/layout_read_background_color">
+
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_width="@dimen/layout_read_image_size"
+            android:layout_height="@dimen/layout_read_image_size"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/common_margin"
+            android:layout_marginBottom="@dimen/common_margin"
+            android:background="@drawable/ic_back"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/readLabelRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/backImage"/>
+    </RelativeLayout>
+</layout>
